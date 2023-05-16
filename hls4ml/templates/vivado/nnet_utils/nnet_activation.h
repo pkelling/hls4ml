@@ -37,7 +37,8 @@ template <class data_T, class res_T, typename CONFIG_T> void linear(data_T data[
 //       RELU Activation
 // *************************************************
 template <class data_T, class res_T, typename CONFIG_T> void relu(data_T data[CONFIG_T::n_in], res_T res[CONFIG_T::n_in]) {
-    #pragma HLS PIPELINE
+    //#pragma HLS PIPELINE
+    #pragma HLS INLINE
 
     data_T datareg;
     for (int ii = 0; ii < CONFIG_T::n_in; ii++) {
@@ -424,7 +425,9 @@ template <class data_T, class res_T, typename CONFIG_T> void tanh(data_T data[CO
         initialized = true;
     }
 
-    #pragma HLS PIPELINE
+    //#pragma HLS PIPELINE
+    #pragma HLS ARRAY_PARTITION variable=tanh_table complete dim=0
+    #pragma HLS INLINE
 
     // Index into the lookup table based on data
     int data_round;
