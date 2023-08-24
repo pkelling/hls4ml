@@ -394,6 +394,7 @@ class Dense(Layer):
         WeightAttribute('bias'),
         TypeAttribute('weight'),
         TypeAttribute('bias'),
+        TypeAttribute('accum'),
     ]
 
     def initialize(self):

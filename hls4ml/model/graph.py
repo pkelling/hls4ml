@@ -746,6 +746,9 @@ class ModelGraph:
             output = [
                 np.asarray([output[i_sample][i_output] for i_sample in range(n_samples)]) for i_output in range(n_outputs)
             ]
+        except:
+            print("Something went wrong with the prediction")
+            
         finally:
             os.chdir(curr_dir)
 

@@ -70,6 +70,7 @@ template <class x_T, class w_T> class mult : public Product {
     static auto product(x_T a, w_T w) -> decltype(a * w) {
         // 'Normal' product
         #pragma HLS INLINE
+        //#pragma HLS PIPELINE
         return a * w;
     }
 };
@@ -105,11 +106,13 @@ template <class data_T, class res_T, typename CONFIG_T>
 inline typename std::enable_if<
     std::is_same<data_T, ap_uint<1>>::value && !std::is_same<typename CONFIG_T::weight_t, ap_uint<1>>::value, res_T>::type
 cast(typename CONFIG_T::accum_t x) {
+    #pragma HLS INLINE
     return (res_T)x;
 }
 
 template <class data_T, class res_T, typename CONFIG_T>
 inline typename std::enable_if<(!std::is_same<data_T, ap_uint<1>>::value), res_T>::type cast(typename CONFIG_T::accum_t x) {
+    #pragma HLS INLINE
     return (res_T)x;
 }
 

@@ -26,9 +26,11 @@ struct activ_config {
 //       LINEAR Activation -- See Issue 53
 // *************************************************
 template <class data_T, class res_T, typename CONFIG_T> void linear(data_T data[CONFIG_T::n_in], res_T res[CONFIG_T::n_in]) {
-    #pragma HLS PIPELINE
+    //#pragma HLS PIPELINE
+    #pragma HLS INLINE
 
     for (int ii = 0; ii < CONFIG_T::n_in; ii++) {
+        #pragma HLS UNROLL
         res[ii] = data[ii];
     }
 }
@@ -39,6 +41,7 @@ template <class data_T, class res_T, typename CONFIG_T> void linear(data_T data[
 template <class data_T, class res_T, typename CONFIG_T> void relu(data_T data[CONFIG_T::n_in], res_T res[CONFIG_T::n_in]) {
     //#pragma HLS PIPELINE
     #pragma HLS INLINE
+    #pragma HLS UNROLL region
 
     data_T datareg;
     for (int ii = 0; ii < CONFIG_T::n_in; ii++) {
@@ -428,6 +431,7 @@ template <class data_T, class res_T, typename CONFIG_T> void tanh(data_T data[CO
     //#pragma HLS PIPELINE
     #pragma HLS ARRAY_PARTITION variable=tanh_table complete dim=0
     #pragma HLS INLINE
+    #pragma HLS UNROLL region
 
     // Index into the lookup table based on data
     int data_round;
